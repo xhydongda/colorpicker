@@ -1,5 +1,5 @@
 # colorpicker
-angular2 [primeng colorpicker](https://www.primefaces.org/primeng/showcase/#/colorpicker)+[jscolor](http://www.gnu.org/copyleft/lesser.html)
+angular2 [primeng colorpicker](https://www.primefaces.org/primeng/showcase/#/colorpicker)+[jscolor](http://jscolor.com)
 ![primeng colorpicker](../master/before20200409.png)
 ![primeng colorpicker+jscolor](../master/after20200409.png)
 # new features
