@@ -1,9 +1,7 @@
 # colorpicker
 angular2 [primeng colorpicker](https://www.primefaces.org/primeng/showcase/#/colorpicker)+[jscolor](http://jscolor.com)
 
-primeng colorpicker like this: ![primeng colorpicker](../master/before20200409.png)
-
-with this component, u get this: ![primeng colorpicker+jscolor](../master/after20200409.png)
+primeng colorpicker: ![primeng colorpicker](../master/before20200409.png) this component: ![primeng colorpicker+jscolor](../master/after20200409.png)
 # new features
 1. HEX, RGB, HSB edit support with radiobutton to swith RGB/HSB;
 2. Up to 12 recent colors to choose;
