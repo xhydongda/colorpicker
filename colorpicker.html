@@ -1,0 +1,189 @@
+<div [ngStyle]="style" [class]="styleClass" [ngClass]="{'ui-colorpicker ui-widget':true,'ui-colorpicker-overlay':!inline,'ui-colorpicker-dragging':colorDragging||hueDragging}">
+    <input #input type="text" *ngIf="!inline" class="ui-colorpicker-preview ui-inputtext ui-state-default ui-corner-all" readonly="readonly" [ngClass]="{'ui-state-disabled': disabled}" (focus)="onInputFocus()" (click)="onInputClick()" (keydown)="onInputKeydown($event)"
+        [attr.id]="inputId" [attr.tabindex]="tabindex" [disabled]="disabled" [style.backgroundColor]="inputBgColor">
+    <div *ngIf="inline || overlayVisible" [ngClass]="{'ui-colorpicker-panel ui-corner-all': true, 'ui-colorpicker-overlay-panel ui-shadow':!inline, 'ui-state-disabled': disabled}" (click)="onPanelClick()" [@overlayAnimation]="{value: 'visible', params: {showTransitionParams: showTransitionOptions, hideTransitionParams: hideTransitionOptions}}"
+        [@.disabled]="inline === true" (@overlayAnimation.start)="onOverlayAnimationStart($event)">
+        <div class="ui-colorpicker-content">
+            <div #colorSelector class="ui-colorpicker-color-selector" (mousedown)="onColorMousedown($event)">
+                <div class="ui-colorpicker-color">
+                    <div #colorHandle class="ui-colorpicker-color-handle"></div>
+                </div>
+            </div>
+            <div #hue class="ui-colorpicker-hue" (mousedown)="onHueMousedown($event)">
+                <div #hueHandle class="ui-colorpicker-hue-handle"></div>
+            </div>
+            <div class="ui-g ui-colorpicker-inputpanel">
+                <div class="ui-colorpicker-inputrow">
+                    <input pInputText class="ui-g-4" [ngModel]="hexValue" (ngModelChange)="onHexInput($event)">
+                    <p-radioButton class="ui-g-4" name="group1" value="rgb" label="RGB" [(ngModel)]="mode" inputId="opt1"></p-radioButton>
+                    <p-radioButton class="ui-g-4" name="group1" value="hsb" label="HSB" [(ngModel)]="mode" inputId="opt1"></p-radioButton>
+                </div>
+                <div *ngIf="mode=='rgb'" class="ui-colorpicker-inputrow">
+                    <span class="ui-g-1">R</span><input pInputText class="ui-g-3" [(ngModel)]="rgb_r">
+                    <span class="ui-g-1">G</span><input pInputText class="ui-g-3" [(ngModel)]="rgb_g">
+                    <span class="ui-g-1">B</span><input pInputText class="ui-g-3" [(ngModel)]="rgb_b">
+                </div>
+                <div *ngIf="mode=='hsb'" class="ui-colorpicker-inputrow">
+                    <span class="ui-g-1">H</span><input pInputText class="ui-g-3" [(ngModel)]="hsb_h">
+                    <span class="ui-g-1">S</span><input pInputText class="ui-g-3" [(ngModel)]="hsb_s">
+                    <span class="ui-g-1">B</span><input pInputText class="ui-g-3" [(ngModel)]="hsb_b">
+                </div>
+            </div>
+            <table class="ui-colorpicker-recentpanel">
+                <tbody>
+                    <tr>
+                        <td *ngFor="let recentColor of recentColors" class="ui-colorpicker-square" [style.background-color]="recentColor" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="ui-colorpicker-predefinedpanel">
+                <tbody>
+                    <tr>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 255, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 255, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(230, 230, 230);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(204, 204, 204);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(179, 179, 179);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(153, 153, 153);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(128, 128, 128);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(102, 102, 102);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(77, 77, 77);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(51, 51, 51);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(26, 26, 26);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 0, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                    </tr>
+                    <tr>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 204, 204);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 230, 204);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 255, 204);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(230, 255, 204);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(204, 255, 204);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(204, 255, 230);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(204, 255, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(204, 229, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(204, 204, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(229, 204, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 204, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 204, 230);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                    </tr>
+                    <tr>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 153, 153);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 204, 153);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 255, 153);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(204, 255, 153);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(153, 255, 153);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(153, 255, 204);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(153, 255, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(153, 204, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(153, 153, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(204, 153, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 153, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 153, 204);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                    </tr>
+                    <tr>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 102, 102);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 179, 102);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 255, 102);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(179, 255, 102);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(102, 255, 102);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(102, 255, 179);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(102, 255, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(102, 178, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(102, 102, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(178, 102, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 102, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 102, 179);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                    </tr>
+                    <tr>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 51, 51);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 153, 51);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 255, 51);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(153, 255, 51);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(51, 255, 51);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(51, 255, 153);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(51, 255, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(51, 153, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(51, 51, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(153, 51, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 51, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 51, 153);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                    </tr>
+                    <tr>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 0, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 128, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 255, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(128, 255, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 255, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 255, 128);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 255, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 127, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 0, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(127, 0, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 0, 255);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(255, 0, 128);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                    </tr>
+                    <tr>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(204, 0, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(204, 102, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(204, 204, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(102, 204, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 204, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 204, 102);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 204, 204);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 102, 204);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 0, 204);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(102, 0, 204);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(204, 0, 204);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(204, 0, 102);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                    </tr>
+                    <tr>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(153, 0, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(153, 76, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(153, 153, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(77, 153, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 153, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 153, 77);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 153, 153);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 76, 153);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 0, 153);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(76, 0, 153);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(153, 0, 153);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(153, 0, 77);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                    </tr>
+                    <tr>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(102, 0, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(102, 51, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(102, 102, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(51, 102, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 102, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 102, 51);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 102, 102);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 51, 102);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 0, 102);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(51, 0, 102);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(102, 0, 102);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(102, 0, 51);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                    </tr>
+                    <tr>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(51, 0, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(51, 26, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(51, 51, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(26, 51, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 51, 0);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 51, 26);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 51, 51);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 25, 51);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(0, 0, 51);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(25, 0, 51);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(51, 0, 51);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                        <td class="ui-colorpicker-square" style="background-color: rgb(51, 0, 26);" (click)="onCellClick($event.target.style.backgroundColor)"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="ui-g ui-colorpicker-buttonpanel">
+                <button type="button" class="ui-g-6" (click)="cancel()">{{'cancel'|lang}}</button>
+                <button type="button" class="ui-g-6" (click)="apply()">{{'apply'|lang}}</button>
+            </div>
+        </div>
+    </div>
+</div>

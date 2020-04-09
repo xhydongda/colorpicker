@@ -1,0 +1,140 @@
+.ui-colorpicker {
+    display: inline-block;
+}
+
+.ui-colorpicker-dragging {
+    cursor: pointer;
+}
+
+.ui-colorpicker-overlay {
+    position: relative;
+}
+
+.ui-colorpicker-panel {
+    position: relative;
+    width: 210px;
+    height: 442px;
+    background-color: #323232;
+    border-color: #191919;
+}
+
+.ui-colorpicker-overlay-panel {
+    position: absolute;
+}
+
+.ui-colorpicker-preview {
+    min-width: 2em;
+    width: 100%;
+    cursor: pointer;
+}
+
+.ui-colorpicker-panel .ui-colorpicker-content {
+    position: relative;
+}
+
+.ui-colorpicker-panel .ui-colorpicker-color-selector {
+    width: 150px;
+    height: 150px;
+    top: 8px;
+    left: 8px;
+    position: absolute;
+}
+
+.ui-colorpicker-panel .ui-colorpicker-color {
+    width: 150px;
+    height: 150px;
+    background: transparent url("./color.png") no-repeat left top;
+}
+
+.ui-colorpicker-panel .ui-colorpicker-color-handle {
+    position: absolute;
+    top: 0px;
+    left: 150px;
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    border: 1px solid #ffffff;
+    margin: -5px 0 0 -5px;
+    cursor: pointer;
+}
+
+.ui-colorpicker-panel .ui-colorpicker-hue {
+    background: transparent url("./hue.png") repeat-x left top;
+    width: 34px;
+    height: 150px;
+    top: 8px;
+    left: 167px;
+    position: absolute;
+    opacity: .85;
+}
+
+.ui-colorpicker-panel .ui-colorpicker-hue-handle {
+    position: absolute;
+    top: 150px;
+    left: 0px;
+    width: 38px;
+    margin-left: -2px;
+    margin-top: -5px;
+    height: 10px;
+    border: 2px solid #ffffff;
+    opacity: .85;
+    cursor: pointer;
+}
+
+.ui-colorpicker-panel .ui-colorpicker-inputpanel {
+    position: absolute;
+    top: 166px;
+    left: 8px;
+    width: 194px;
+    background-color: #ffffff;
+}
+
+.ui-colorpicker-panel .ui-colorpicker-inputrow {
+    margin: 2px;
+}
+
+.ui-colorpicker-panel .ui-colorpicker-inputrow input,
+.ui-colorpicker-panel .ui-colorpicker-inputrow span,
+.ui-colorpicker-panel .ui-colorpicker-inputrow p-radiobutton {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.ui-colorpicker-panel .ui-colorpicker-recentpanel {
+    position: absolute;
+    top: 217px;
+    left: 8px;
+    width: 194px;
+    background-color: #ffffff;
+    border-collapse: collapse;
+}
+
+.ui-colorpicker-panel .ui-colorpicker-square {
+    border: 1px solid black;
+    padding: 0px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.ui-colorpicker-panel .ui-colorpicker-predefinedpanel {
+    border-collapse: collapse;
+    position: absolute;
+    top: 237px;
+    left: 8px;
+    width: 194px;
+    background-color: #ffffff;
+}
+
+.ui-colorpicker-panel .ui-colorpicker-buttonpanel {
+    position: absolute;
+    top: 405px;
+    left: 8px;
+    width: 194px;
+    background-color: #ffffff;
+}
+
+.ui-colorpicker-panel.ui-state-disabled .ui-colorpicker-hue-handle,
+.ui-colorpicker-panel.ui-state-disabled .ui-colorpicker-color-handle {
+    opacity: .5;
+}
